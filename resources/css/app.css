@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.table-thead {
+    @apply px-1 border-l-2 text-center font-sans py-1 border-b-2 border-gray-300 bg-gray-200 text-sm leading-3 font-medium text-gray-600 uppercase tracking-wider;
+}
+
+.table-tbody {
+    @apply px-1 py-1 text-sm font-sans border-l-2 text-center border-b border-gray-300;
+}
+
+.button-primary {
+   @apply bg-blue-500 text-xs hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 mx-1;
+}
+
+.button-danger {
+    @apply bg-orange-500 text-xs hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-50 mx-1;
+}
+
+.button-warning {
+    @apply bg-red-500 text-xs hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 mx-1;
+}
+
+.error-text {
+    @apply text-sm font-sans text-red-600;
+}
+
+.error-field {
+    @apply border-red-500;
+}
+
+.input-field {
+    @apply shadow-sm appearance-none border text-sm rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500;
+}
+
+.treeselect-invalid .vue-treeselect__control {
+    @apply border-red-500 border-solid;
+}
+
+table.dataTable thead th {
+    @apply text-slate-700 text-center; /* Tailwind's gray-200 */
+}
+
+.table-body {
+    @apply bg-slate-50 border-2 divide-y divide-gray-200 px-6 py-4 whitespace-nowrap text-sm text-slate-700;
+}
+
+.modal {
+    @apply fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75;
+}
