@@ -75,6 +75,8 @@ class Task extends Model
                                 return stripos($data['label'], $value['column_value']) !== false;
                             });
                             $dataset->whereIn('status_id',  $collection->pluck("id"));
+                        } elseif ($value['column_name'] == "createdDate") {
+                            $dataset->where('created_at', 'like', "%".$value['column_value']."%");
                         } else {
                             $dataset->where($value['column_name'], 'like', "%".$value['column_value']."%");
                         }
