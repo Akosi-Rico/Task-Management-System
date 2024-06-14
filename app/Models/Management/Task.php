@@ -17,6 +17,7 @@ class Task extends Model
     use HasFactory, Helper;
 
     const DONE = 3;
+    const ARCHIVE = 4;
 
     public static function createOrUpdateTask($request)
     {

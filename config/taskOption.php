@@ -16,7 +16,7 @@ return [
         ],
         [
             "id" => 4,
-            "label" => "Archieve",
+            "label" => "Archive",
         ],
     ]
 ];
