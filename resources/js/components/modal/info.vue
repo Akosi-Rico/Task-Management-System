@@ -15,7 +15,7 @@
                     <label class="block text-gray-700 text-sm font-bold mb-2 py-1" for="username">
                         TITLE 
                     </label>
-                    <input :class="(!errors['payload.title'] ? 'border-gray-300' : 'error-field')" class="input-field" id="name" name="name" type="text" placeholder="Enter your Title" v-model="payload.title">
+                    <input :class="(!errors['payload.title'] ? 'border-gray-300' : 'error-field')" class="input-field" id="name" name="name" type="text" placeholder="Enter your Title" v-model="details.title">
                     <span class="error-text" v-if="errors['payload.title']">
                             {{ errors['payload.title'][0] }}
                      </span>
@@ -23,7 +23,7 @@
                     <label class="block text-gray-700 text-sm font-bold mb-2 py-1" for="username">
                         CONTENT 
                     </label>
-                    <input :class="(!errors['payload.content'] ? 'border-gray-300' : 'error-field')" class="input-field" id="name" name="name" type="text" placeholder="Enter your Content" v-model="payload.content">
+                    <input :class="(!errors['payload.content'] ? 'border-gray-300' : 'error-field')" class="input-field" id="name" name="name" type="text" placeholder="Enter your Content" v-model="details.content">
                     <span class="error-text" v-if="errors['payload.content']">
                             {{ errors['payload.content'][0] }}
                      </span>
@@ -31,13 +31,18 @@
                     <label class="block text-gray-700 text-sm font-bold mb-2 py-1" for="username">
                         STATUS 
                     </label>
-                    <treeselect :class="(!errors['payload.status'] ? '' : 'treeselect-invalid')"  :multiple="false" :options="data.statusOption" placeholder="Please select status" v-model="payload.status"/>
+                    <treeselect :class="(!errors['payload.status'] ? '' : 'treeselect-invalid')"  :multiple="false" :options="data.statusOption" placeholder="Please select status" v-model="details.status"/>
                     <span class="error-text" v-if="errors['payload.status']">
                             {{ errors['payload.status'][0] }}
                      </span>
                 </div>
+                <section class="p-2">
+                    <dropzone 
+                    :data="data"
+                    @uploaded="loadFile"></dropzone>
+                </section>
                 <button type="button" class="button-primary" @click="update()">
-                    Update
+                     {{ details.label }}
                 </button>
             </form>
         </div>
@@ -45,7 +50,9 @@
 </template>
 <script>
 import Treeselect from 'vue3-treeselect';
+import { useDropzone } from "vue3-dropzone";
 import 'vue3-treeselect/dist/vue3-treeselect.css';
+import dropzone from "../dropzone-area.vue";
 export default  {
     props: [
         "baseimage",
@@ -54,19 +61,15 @@ export default  {
         "details"
     ],
     components: {
-        Treeselect
+        Treeselect,
+        useDropzone,
+        dropzone
     },
     data() {
         return  {
-            payload: {
-                id: null,
-                title: null,
-                content: null,
-                status: null,
-                parent_id: null,
-            },
             errors: [],
             isOpenModal: false,
+            label: null,
         }
     },
     methods: {
@@ -76,7 +79,7 @@ export default  {
                 method: 'POST',
                 url: _this.data.taskUpdateUrl,
                 data: {
-                    payload: _this.payload
+                    payload: _this.details
                 },
             }).then(function (response) {
                 if (response.status == 200) {
@@ -95,31 +98,16 @@ export default  {
             this.$emit("isClosed", true);
         },
         clearFields() {
-            this.payload.id = null;
-            this.payload.title = null;
-            this.payload.content = null;
-            this.payload.status = null;
-            this.payload.parent_id = null;
+            this.details.id = null;
+            this.details.title = null;
+            this.details.content = null;
+            this.details.status = null;
+            this.details.parent_id = null;
+            this.label= null;
         },
-        setDetails() {
-            if (this.details) {
-                this.payload.title = this.details.title;
-            }
+        loadFile(data) {
+            this.details.attachment = data;
         }
     },
-    watch: {
-        'details.title': {
-            handler:function(val) {
-                if (val) {
-                    this.payload.title = this.details.title;
-                    this.payload.content = this.details.content;
-                    this.payload.status = this.details.status;
-                    this.payload.id = this.details.id;
-                    this.payload.parent_id = this.details.parent_id;
-                }
-            }
-        },
-        deep: true
-    }
 }
 </script>

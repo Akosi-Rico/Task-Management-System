@@ -14,4 +14,5 @@ Route::middleware(["isoLogin"])->group(function () {
     Route::resource("/", ManageController::class);
     Route::post("/generate/task", [ManageController::class, "loadTask"])->name("load.task");
     Route::post("/logout", [LoginController::class, "logout"])->name("logout.account");
+    Route::post("/upload/file", [ManageController::class, "uploadFile"])->name("upload.file");
 });

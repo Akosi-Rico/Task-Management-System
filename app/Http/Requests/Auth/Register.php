@@ -23,7 +23,7 @@ class Register extends FormRequest
     {
         return [
             'payload.name.required' => "Name is required, Please fill out the required field!",
-            'payload.email.required' => "Email is required, Please fill out the required field!",
+            'payload.email.unique' => "This Email has already been taken.",
             'payload.email.string' => "The Email address must be a valid string.",
             'payload.email.lowercase' => "Lower case required! for email address",
             'payload.email.email' => "The email address must be a valid email",

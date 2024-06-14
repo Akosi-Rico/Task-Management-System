@@ -15,8 +15,9 @@ class ProcessRequest extends FormRequest
 
     public function rules(): array
     {
+        $id = (isset(request()->payload["id"]) ? request()->payload["id"] : null);
         return [
-            'payload.title' => ['required', 'max:100','unique:tasks,title,'.request()->payload["id"]],
+            'payload.title' => ['required', 'max:100',"unique:tasks,title,$id"],
             'payload.content' => ['required'],
             'payload.status' => ['required'],
         ];

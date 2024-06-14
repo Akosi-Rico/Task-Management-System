@@ -2,17 +2,20 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Observers\UserObserver;
+use App\Services\JsonOutput;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response;
-
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use App\Services\Helper;
+#[ObservedBy([UserObserver::class])]
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, Helper;
 
     protected $guard_name = "web";
 
@@ -52,16 +55,10 @@ class User extends Authenticatable
 
             DB::commit();
 
-            auth()->attempt(["email" => request()->payload["email"], "password" => request()->payload["password"]]);
-
-            return response()->json([
-                "message" => "Transaction Successfully Completed!",
-            ], Response::HTTP_OK);
+            return self::loadResponse('Transaction Successfully Completed!', Response::HTTP_OK, new JsonOutput);
         } catch(\Throwable $th) {
             DB::rollback();
-            return response()->json([
-                "message" => $th->getMessage(),
-            ], Response::HTTP_BAD_REQUEST);
+            return self::loadResponse($th->getMessage(), Response::HTTP_BAD_REQUEST, new JsonOutput);
         }
     }
 
@@ -74,18 +71,12 @@ class User extends Authenticatable
 
             auth()->attempt(["email" => $request["email"], "password" => $request["password"]]);
             if (empty(auth()->check())) {
-                return response()->json([
-                    "message" => "Email & Password given is not registered.",
-                ], Response::HTTP_BAD_REQUEST);
+                throw new \Exception("Email & Password given is not registered");
             }
 
-            return response()->json([
-                "message" => "Successfully Login!",
-            ], Response::HTTP_OK);
+           return self::loadResponse("Successfully Login!", Response::HTTP_OK, new JsonOutput);
         } catch(\Throwable $th) {
-            return response()->json([
-                "message" => $th->getMessage(),
-            ], Response::HTTP_BAD_REQUEST);
+            return self::loadResponse($th->getMessage(), Response::HTTP_BAD_REQUEST, new JsonOutput);
         }
     }
 }

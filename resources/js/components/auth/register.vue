@@ -41,6 +41,11 @@
                             {{ errors['payload.password'][0] }}
                      </span>
                 </div>
+                <div class="flex justify-center items-center p-2">
+                    <span class="error-text" v-if="accountError">
+                        {{ accountError }}
+                    </span>
+                </div>
                 <button type="button" @click="submit()" class="button-primary">
                     Register
                 </button>
@@ -64,6 +69,7 @@ export default  {
                 password_confirmation: null,
             },
             errors: [],
+            accountError: null,
         }
     },
     methods: {
@@ -82,7 +88,11 @@ export default  {
             })
             .catch(function (errorHandler) {
                 if (errorHandler.response.status == 422) {
+                    _this.accountError = null;
                     _this.errors = errorHandler.response.data.errors;
+                } else if (errorHandler.response.status == 400) {
+                    _this.errors = [];
+                    _this.accountError = errorHandler.response.data.message;
                 }
             });
         }

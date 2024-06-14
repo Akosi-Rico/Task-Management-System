@@ -2,11 +2,9 @@
 @section("body")
     <parent
         :baseimage="{{ json_encode(asset("image")) }}"
-        :data="{{ json_encode($data) }}">
+        :data="{{ json_encode($data) }}"
+        :storagepath="{{ json_encode(asset("storage/temporary")) }}">
     </parent>
-    @section("javascript")
-      
-    @endsection
 @endsection
 
 
