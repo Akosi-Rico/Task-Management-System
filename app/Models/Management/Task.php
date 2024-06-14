@@ -16,6 +16,8 @@ class Task extends Model
 {
     use HasFactory, Helper;
 
+    const DONE = 3;
+
     public static function createOrUpdateTask($request)
     {
         try {
@@ -88,7 +90,7 @@ class Task extends Model
                 $description = collect(config("taskOption.status"))->where("id", $item->status_id)->first()["label"];
                 $item->status_description = $description;
                 $item->createdDate = $item->created_at->format("Y-m-d");
-                $item->withChild = collect($item)->where("parent_id", $item->id)->count() > 0 ? true : false;
+                $item->withChild = $item->where("parent_id", $item->id)->count() > 0 ? true : false;
                 return $item;
             });
             

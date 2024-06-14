@@ -206,8 +206,6 @@ export default  {
                 }
                 taskTable.clearPipeline().draw();
             }
-
-            taskTable.clearPipeline().draw();
         },
         openModal() {
            this.isModalOpen = true;
