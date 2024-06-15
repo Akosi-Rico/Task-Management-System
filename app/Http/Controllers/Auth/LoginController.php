@@ -30,6 +30,10 @@ class LoginController extends Controller
 
     public function logout()
     {
-        auth()->guard('web')->logout();
+        auth()->guard()->logout();
+
+        request()->session()->invalidate();
+
+        request()->session()->regenerateToken();
     }
 }

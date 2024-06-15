@@ -215,6 +215,9 @@ export default  {
             axios({
                 method: 'POST',
                 url: _this.data.logoutUrl,
+                data: {
+                    _token: $('meta[name="csrf-token"]').attr('content')
+                }
             });
             location.href = _this.data.loginUrl;
         },
