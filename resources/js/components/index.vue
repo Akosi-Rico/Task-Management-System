@@ -136,7 +136,7 @@ export default  {
                             let item = null;
                             let image = _this.storagepath+"/"+full["attachment"];
                             if (full["attachment"]) {
-                                item =  "<img src="+image+"/>";
+                                item =  "<img src="+image+">";
                             }
 
                             return item;
