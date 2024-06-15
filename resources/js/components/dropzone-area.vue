@@ -10,7 +10,7 @@
     </div>
     <div v-else class="dropzone" v-bind="getRootProps()" >
       <div class="border-drop" :class="{ isDragActive,}">
-        <input v-bind="getInputProps()" :maxFiles="1"  :multiple="0" :accept="'image/jpeg, image/png'" />
+        <input v-bind="getInputProps()" :maxFiles="1"  :multiple="0" :accept="'image/jpeg, image/png'" :maxSize="4" />
         <p v-if="isDragActive" >Drop the files here ...</p>
         <p v-else>Drag and drop files here, or Click to select files</p>
       </div>
