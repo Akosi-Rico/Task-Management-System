@@ -35,6 +35,13 @@
                     <span class="error-text" v-if="errors['payload.status']">
                             {{ errors['payload.status'][0] }}
                      </span>
+                     <label class="block text-gray-700 text-sm font-bold mb-2 py-1" for="username">
+                        CONDITION 
+                    </label>
+                    <treeselect :class="(!errors['payload.condition_id'] ? '' : 'treeselect-invalid')"  :multiple="false" :options="data.conditionOption" placeholder="Please select Condition" v-model="details.condition_id"/>
+                    <span class="error-text" v-if="errors['payload.condition_id']">
+                            {{ errors['payload.condition_id'][0] }}
+                     </span>
                 </div>
                 <section class="p-2">
                     <dropzone 
@@ -103,6 +110,8 @@ export default  {
             this.details.content = null;
             this.details.status = null;
             this.details.parent_id = null;
+            this.details.attachment = null;
+            this.details.condition_id = null;
             this.label= null;
         },
         loadFile(data) {

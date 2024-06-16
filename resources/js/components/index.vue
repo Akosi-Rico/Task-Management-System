@@ -41,6 +41,7 @@
                             <th data-index="title" scope="col" class="px-6 border-2  py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
                             <th data-index="content" scope="col" class="px-6 border-2 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Content</th>
                             <th data-index="status_description" scope="col" class="px-6 border-2 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                            <th data-index="condition_description" scope="col" class="px-6 border-2 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Condition</th>
                             <th data-index="attachment" scope="col" class="px-6  border-2 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Image</th>
                             <th data-index="createdDate" scope="col" class="px-6 border-2 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Created Date</th>
                             <th data-index="action" scope="col" class="px-6 border-2 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
@@ -82,6 +83,7 @@ export default  {
                 parent_id: null,
                 attachment: null,
                 label: 'Submit',
+                condition_id: null,
             },
         }
     },
@@ -131,6 +133,7 @@ export default  {
                     { data : 'title' },
                     { data : 'content' },
                     { data : 'status_description' },
+                    { data : 'condition_description' },
                     {
                        render:function(data, type, full, meta) {
                             let item = null;
@@ -151,7 +154,8 @@ export default  {
                                     data-content='"+full['content']+"' \
                                     data-attachment='"+full['attachment']+"' \
                                     data-id='"+full['id']+"' \
-                                    data-status='"+full['status_id']+"'> \
+                                    data-status='"+full['status_id']+"' \
+                                    data-condition_id='"+full['condition_id']+"'> \
                                     Update \
                                 </button> \
                                 <button type='button' class='button-danger openDetail' \
@@ -159,7 +163,8 @@ export default  {
                                     data-content='"+full['content']+"' \
                                     data-attachment='"+full['attachment']+"' \
                                     data-parent_id='"+full['id']+"' \
-                                    data-status='"+full['status_id']+"'> \
+                                    data-status='"+full['status_id']+"'\
+                                    data-condition_id='"+full['condition_id']+"'> \
                                     Create Task \
                                 </button> \
                                 <button type='button' class='button-warning subtask' \
@@ -227,6 +232,7 @@ export default  {
         },
         openDetail() {
             let _this = this;
+            let img = null;
             $ (function() {
                 $(document).on("click", ".openDetail", function() {
                     if (!$(this).attr("data-parent_id")) {
@@ -234,6 +240,9 @@ export default  {
                         _this.payload.title = $(this).attr("data-title");
                         _this.payload.content = $(this).attr("data-content");
                         _this.payload.status = $(this).attr("data-status");
+                        img = $(this).attr("data-attachment") === 'null' ? null : $(this).attr("data-attachment");
+                        _this.payload.attachment = img;
+                        _this.payload.condition_id = $(this).attr("data-condition_id");
                         _this.payload.label = "Update";
                     } else {
                         _this.payload.label = "Extend";

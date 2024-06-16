@@ -18,6 +18,7 @@ trait Helper
     {
         return [
             "statusOption" => config("taskOption.status"),
+            "conditionOption" => config("taskOption.condition"),
             "taskUpdateUrl" => route("store"),
             "currentUser" => auth()->user()->name,
             "currentDate" => now()->format('F j, Y'),

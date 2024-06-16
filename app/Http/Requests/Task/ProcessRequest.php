@@ -20,6 +20,7 @@ class ProcessRequest extends FormRequest
             'payload.title' => ['required', 'max:100',"unique:tasks,title,$id"],
             'payload.content' => ['required'],
             'payload.status' => ['required'],
+            'payload.condition_id' => ['required'],
         ];
     }
 
@@ -31,6 +32,7 @@ class ProcessRequest extends FormRequest
             'payload.title.unique' => "This title has already been taken",
             'payload.content.required' => "Content is required, Please fill out the required field!",
             'payload.status.required' => "Status is required, Please fill out the required field!",
+            'payload.condition_id.required' => "Condition is required, Please fill out the required field!",
         ];
     }
 }

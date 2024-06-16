@@ -18,5 +18,15 @@ return [
             "id" => 4,
             "label" => "Archive",
         ],
+    ],
+    'condition' => [
+        [
+            'id' => 0,
+            'label' => 'Draft',
+        ],
+        [
+            'id' => 1,
+            'label' => 'Published',
+        ],
     ]
 ];
