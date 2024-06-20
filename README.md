@@ -14,5 +14,6 @@ Steps
 - config database
 - php artisan key:generate
 - php artisan config:cache
+- php artisan storage:link
 - npm run dev
 
